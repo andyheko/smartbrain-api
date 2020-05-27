@@ -9,17 +9,17 @@ const database = {
     {
       id: '123',
       name: 'Andy',
-      mail: 'andyko@gmail.com',
+      email: 'andyko@gmail.com',
       password: 'cake',
-      entrie: 0,
+      entries: 0,
       joined: new Date()
     },
     {
       id: '124',
       name: 'Sally',
-      mail: 'sallyei@gmail.com',
+      email: 'sally@gmail.com',
       password: 'io',
-      entrie: 0,
+      entries: 0,
       joined: new Date()
     }
   ]
@@ -42,7 +42,7 @@ app.post('/signin', (req, res)=> {
   // });
   if(req.body.email === database.users[0].email &&
       req.body.password === database.users[0].password){
-    res.json('sucess sign in')
+    res.json(database.users[0])
   }else{
     res.status(400).json('error logging in');
   }
@@ -58,8 +58,7 @@ app.post('/register', (req, res)=> {
     {
       id: '125',
       name: name,
-      mail: email,
-      password: password,
+      email: email,
       entrie: 0,
       joined: new Date()
     }

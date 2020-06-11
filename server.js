@@ -1,6 +1,19 @@
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
+const knex = require('knex');
+
+const postgres = knex({
+  client: 'pg',
+  connection: {
+    host : '127.0.0.1',
+    user : 'andyko',
+    password : '',
+    database : 'smart-brain'
+  }
+});
+
+console.log(postgres.select('*').from('users'));
 
 const app = express();
 
@@ -80,8 +93,8 @@ app.put('/image', (req, res) => {
   const {id} = req.body;
   database.users.forEach(user => {
     if(user.id === id){
-      user.entrie ++
-      return res.json(user.entrie);
+      user.entries++
+      return res.json(user.entries);
     }
   })
   res.status(404).json('not found');

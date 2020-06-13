@@ -64,17 +64,22 @@ app.post('/signin', (req, res)=> {
 })
 
 app.post('/register', (req, res)=> {
-  const {name, email, password} = req.body;
-  db('users').insert({
-    email: email,
-    name: name,
-    joined: new Date()
-  }).then(console.log)
+  const {email, name, password} = req.body;
+  db('users')
+    .returning('*')
+    .insert({
+      email: email,
+      name: name,
+      joined: new Date()
+    })
+    .then(user => {
+      res.json(user[0]);
+    })
+    .catch(err => res.status(400).json('unable to register'))
   // bcrypt.hash(password, null, null, function(err, hash) {
   //   // Store hash in your password DB.
   //   console.log(hash);
   // });
-  res.json(database.users[database.users.length-1]);
 })
 
 app.get('/profile/:id', (req, res) => {

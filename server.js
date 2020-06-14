@@ -65,7 +65,7 @@ app.post('/signin', (req, res)=> {
 
 app.post('/register', (req, res)=> {
   const {email, name, password} = req.body;
-  db('users')
+  return db('users')
     .returning('*')
     .insert({
       email: email,
@@ -83,13 +83,20 @@ app.post('/register', (req, res)=> {
 })
 
 app.get('/profile/:id', (req, res) => {
-  const {id} = req.params;
-  database.users.forEach(user => {
-    if(user.id === id){
-      return res.json(user);
-    }
-  })
-  res.status(404).json('not found');
+  const { id } = req.params;
+  db.select('*').from('users').where({id})
+    .then(user => {
+      if (user.length) {
+        res.json(user[0])
+      } else {
+        res.status(404).json('Not found');
+      }
+    })
+  // database.users.forEach(user => {
+  //   if(user.id === id){
+  //     return res.json(user);
+  //   }
+  // })
 })
 
 app.put('/image', (req, res) => {

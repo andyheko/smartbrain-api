@@ -1,4 +1,5 @@
 const handleSignin = (req, res, db, bcrypt)=> {
+  const { email, password } = req.body;
   // // // Load hash from your password DB.
   // // bcrypt.compare("bacon", hash, function(err, res) {
   // //     // res == true
@@ -13,12 +14,12 @@ const handleSignin = (req, res, db, bcrypt)=> {
   //   res.status(400).json('error logging in');
   // }
   db.select('email', 'hash').from('login')
-    .where('email', '=', req.body.email)
-    .then(user => {
-      const isValid = bcrypt.compareSync(req.body.password, data[0].hash);
+    .where('email', '=', email)
+    .then(data => {
+      const isValid = bcrypt.compareSync(password, data[0].hash);
       if (isValid) {
-        db.select('*').from('users')
-          .where('email', '=', req.body.email)
+        return db.select('*').from('users')
+          .where('email', '=', email)
           .then(user => {
             res.json(user[0])
           })

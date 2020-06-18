@@ -1,5 +1,8 @@
 const handleSignin = (req, res, db, bcrypt)=> {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json('incorrect form submission');
+  }
   // // // Load hash from your password DB.
   // // bcrypt.compare("bacon", hash, function(err, res) {
   // //     // res == true

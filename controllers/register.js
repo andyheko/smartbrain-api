@@ -1,5 +1,5 @@
 const handleRegister = (req, res, db, bcrypt) => {
-  const {email, name, password} = req.body;
+  const { email, name, password } = req.body;
   if (!email || !name || !password) {
     return res.status(400).json('incorrect form submission');
   }
@@ -27,10 +27,6 @@ const handleRegister = (req, res, db, bcrypt) => {
       .catch(trx.rollback)
     })
     .catch(err => res.status(400).json('unable to register'))
-  // bcrypt.hash(password, null, null, function(err, hash) {
-  //   // Store hash in your password DB.
-  //   console.log(hash);
-  // });
 }
 
 module.exports = {

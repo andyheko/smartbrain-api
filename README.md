@@ -14,3 +14,6 @@ Smart Brain is a web app which uses Clarifai API to recognize and locate face in
 * Knex.js
 * PostgreSQL
 * Bcrypt
+
+# API
+* [Clarifai](https://www.clarifai.com/)
